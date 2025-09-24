@@ -75,3 +75,7 @@ make test
 make coverage
 ```
 Testing suite used is [Unity](https://github.com/ThrowTheSwitch/Unity) and LLVM-COV for coverage.
+
+## Resources
+- [Wikipedia](https://en.wikipedia.org/wiki/Convolution)
+- [Simple Convolution in C](https://lloydrochester.com/post/c/convolution/)
