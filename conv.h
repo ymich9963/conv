@@ -252,7 +252,7 @@ int read_csv_file_data(FILE* file, char** data_string);
  */
 int get_data_from_string(char* data_string, double** x, size_t* detected_samples);
 
-int show_input_info(input_info_t* input_info, SF_INFO* sf_info, uint8_t info_flag, uint8_t quiet_flag);
+void show_input_info(input_info_t* input_info, SF_INFO* sf_info);
 
 /**
  * @brief Set the precision to output values in.

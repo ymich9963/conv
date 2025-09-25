@@ -229,8 +229,8 @@ void generate_file_name(char* restrict ofile, input_info_t* restrict input_info,
         return;
     }
 
-    char ifile_no_extension_x[MIN_STR];
-    char ifile_no_extension_h[MIN_STR];
+    char* ifile_no_extension_x = calloc(sizeof(char), MIN_STR);
+    char* ifile_no_extension_h = calloc(sizeof(char), MIN_STR);
     char* extension_x = calloc(sizeof(char), MAX_EXT_STR);
     char* extension_h = calloc(sizeof(char), MAX_EXT_STR);
 
@@ -240,7 +240,6 @@ void generate_file_name(char* restrict ofile, input_info_t* restrict input_info,
         case CSV_TYPE_CHAR:
             extension_x = get_extension(input_info[X_INDEX].ibuff);
             strncpy(ifile_no_extension_x, input_info[X_INDEX].ibuff, strlen(input_info[X_INDEX].ibuff) - strlen(extension_x));
-            ifile_no_extension_x[strlen(input_info[H_INDEX].ibuff) - strlen(extension_x)] = '\0';
             break;
         case STR_TYPE_CHAR:
             strcpy(ifile_no_extension_x, "stringcsv");
@@ -255,7 +254,6 @@ void generate_file_name(char* restrict ofile, input_info_t* restrict input_info,
         case CSV_TYPE_CHAR:
             extension_h = get_extension(input_info[H_INDEX].ibuff);
             strncpy(ifile_no_extension_h, input_info[H_INDEX].ibuff, strlen(input_info[H_INDEX].ibuff) - strlen(extension_h));
-            ifile_no_extension_h[strlen(input_info[H_INDEX].ibuff) - strlen(extension_h)] = '\0';
             break;
         case STR_TYPE_CHAR:
             strcpy(ifile_no_extension_h, "stringcsv");
@@ -345,9 +343,8 @@ int get_audio_file_data(SNDFILE* restrict file, SF_INFO* restrict sf_info, doubl
     return 0;
 }
 
-int show_input_info(input_info_t* restrict input_info, SF_INFO* restrict sf_info, uint8_t info_flag, uint8_t quiet_flag)
+void show_input_info(input_info_t* restrict input_info, SF_INFO* restrict sf_info)
 {
-    if (info_flag && !quiet_flag) {
         if (input_info->input_type == 'a') {
             fprintf(stdout, "File Name: %s\n", input_info->ibuff);
             fprintf(stdout, "Sample Rate: %d\n", sf_info->samplerate);
@@ -360,9 +357,7 @@ int show_input_info(input_info_t* restrict input_info, SF_INFO* restrict sf_info
             fprintf(stdout, "Samples: %lld\n", input_info->data_samples);
             fprintf(stdout, input_info->input_type == 'c' ? "Format: CSV File\n" : "Format: CSV String\n");
         }
-    }
 
-    return 0;
 }
 
 const char* get_sndfile_major_format(SF_INFO* restrict sf_info)

@@ -3,6 +3,7 @@
 // TODO: Do one with padding and one without. Maybe do different types e.g. fast convolution
 // TODO: Check normalise_data function in DFTT because it might act weird with neg nums
 // TODO: Multiple channels? Choose the sf_info with the most channels
+// TODO: Using two songs is too slow. Solution?
 // FIX: --info output
 
 int main(int argc, char** argv)
@@ -23,12 +24,12 @@ int main(int argc, char** argv)
     conv_conf.input_info[X_INDEX].inp(&conv_conf.input_info[X_INDEX], &sf_info_x, &x);
     conv_conf.input_info[H_INDEX].inp(&conv_conf.input_info[H_INDEX], &sf_info_h, &h);
 
-    if (!conv_conf.quiet_flag) {
+    if (conv_conf.info_flag && !conv_conf.quiet_flag) {
        fprintf(stdout, "\n--INFO--");
        fprintf(stdout, "\n\t=X INPUT=\n");
-       show_input_info(&conv_conf.input_info[X_INDEX], &sf_info_x, conv_conf.info_flag, conv_conf.quiet_flag); 
+       show_input_info(&conv_conf.input_info[X_INDEX], &sf_info_x);
        fprintf(stdout, "\n\t=H INPUT=\n");
-       show_input_info(&conv_conf.input_info[H_INDEX], &sf_info_h, conv_conf.info_flag, conv_conf.quiet_flag); 
+       show_input_info(&conv_conf.input_info[H_INDEX], &sf_info_h);
        fprintf(stdout, "---\n\n");
     }
 
